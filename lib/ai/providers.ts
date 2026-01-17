@@ -1,10 +1,16 @@
-import { gateway } from "@ai-sdk/gateway";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import {
   customProvider,
   extractReasoningMiddleware,
   wrapLanguageModel,
 } from "ai";
 import { isTestEnvironment } from "../constants";
+
+const openai = createOpenAICompatible({
+  name: "OpenAI Compatible",
+  apiKey: process.env.OPENAI_API_KEY || "",
+  baseURL: process.env.OPENAI_API_BASE_URL || "https://api.openai.com/v1",
+});
 
 const THINKING_SUFFIX_REGEX = /-thinking$/;
 
@@ -39,24 +45,24 @@ export function getLanguageModel(modelId: string) {
     const gatewayModelId = modelId.replace(THINKING_SUFFIX_REGEX, "");
 
     return wrapLanguageModel({
-      model: gateway.languageModel(gatewayModelId),
+      model: openai(gatewayModelId),
       middleware: extractReasoningMiddleware({ tagName: "thinking" }),
     });
   }
 
-  return gateway.languageModel(modelId);
+  return openai(modelId);
 }
 
 export function getTitleModel() {
   if (isTestEnvironment && myProvider) {
     return myProvider.languageModel("title-model");
   }
-  return gateway.languageModel("google/gemini-2.5-flash-lite");
+  return openai("provider-5/gemini-2.5-flash-lite");
 }
 
 export function getArtifactModel() {
   if (isTestEnvironment && myProvider) {
     return myProvider.languageModel("artifact-model");
   }
-  return gateway.languageModel("anthropic/claude-haiku-4.5");
+  return openai("provider-3/minimax-m2");
 }
