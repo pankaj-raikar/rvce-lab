@@ -1,5 +1,6 @@
 import type { Geo } from "@vercel/functions";
 import type { ArtifactKind } from "@/components/artifact";
+import { isArtifactsEnabled } from "@/lib/constants";
 
 export const artifactsPrompt = `
 Artifacts is a special user interface mode that helps users with writing, editing, and other content creation tasks. When artifact is open, it is on the right side of the screen, while the conversation is on the left side. When creating or updating documents, changes are reflected in real-time on the artifacts and visible to the user.
@@ -41,6 +42,8 @@ export const regularPrompt = `You are a friendly assistant! Keep your responses 
 
 When asked to write, create, or help with something, just do it directly. Don't ask clarifying questions unless absolutely necessary - make reasonable assumptions and proceed with the task.`;
 
+const artifactsDisabledPrompt = `You are a general-purpose assistant. You are NOT limited to weather information. Answer user questions normally, using tools only if genuinely needed.`;
+
 export type RequestHints = {
   latitude: Geo["latitude"];
   longitude: Geo["longitude"];
@@ -71,6 +74,10 @@ export const systemPrompt = ({
     selectedChatModel.includes("thinking")
   ) {
     return `${regularPrompt}\n\n${requestPrompt}`;
+  }
+
+  if (!isArtifactsEnabled) {
+    return `${regularPrompt}\n\n${requestPrompt}\n\n${artifactsDisabledPrompt}`;
   }
 
   return `${regularPrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;

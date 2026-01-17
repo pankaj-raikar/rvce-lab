@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Chat } from "@/components/chat";
 import { DataStreamHandler } from "@/components/data-stream-handler";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
+import { isArtifactsEnabled } from "@/lib/constants";
 import { generateUUID } from "@/lib/utils";
 
 export default function Page() {
@@ -30,7 +31,7 @@ async function NewChatPage() {
           isReadonly={false}
           key={id}
         />
-        <DataStreamHandler />
+        {isArtifactsEnabled && <DataStreamHandler />}
       </>
     );
   }
@@ -46,7 +47,7 @@ async function NewChatPage() {
         isReadonly={false}
         key={id}
       />
-      <DataStreamHandler />
+      {isArtifactsEnabled && <DataStreamHandler />}
     </>
   );
 }

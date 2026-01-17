@@ -15,7 +15,7 @@ import { createDocument } from "@/lib/ai/tools/create-document";
 import { getWeather } from "@/lib/ai/tools/get-weather";
 import { requestSuggestions } from "@/lib/ai/tools/request-suggestions";
 import { updateDocument } from "@/lib/ai/tools/update-document";
-import { isProductionEnvironment } from "@/lib/constants";
+import { isArtifactsEnabled, isProductionEnvironment } from "@/lib/constants";
 import {
   createStreamId,
   deleteChatById,
@@ -113,6 +113,7 @@ export async function POST(request: Request) {
     const isReasoningModel =
       selectedChatModel.includes("reasoning") ||
       selectedChatModel.includes("thinking");
+    const artifactsEnabled = isArtifactsEnabled;
 
     const modelMessages = await convertToModelMessages(uiMessages);
 
@@ -124,14 +125,15 @@ export async function POST(request: Request) {
           system: systemPrompt({ selectedChatModel, requestHints }),
           messages: modelMessages,
           stopWhen: stepCountIs(5),
-          experimental_activeTools: isReasoningModel
-            ? []
-            : [
-                "getWeather",
-                "createDocument",
-                "updateDocument",
-                "requestSuggestions",
-              ],
+          experimental_activeTools:
+            isReasoningModel || !artifactsEnabled
+              ? []
+              : [
+                  "getWeather",
+                  "createDocument",
+                  "updateDocument",
+                  "requestSuggestions",
+                ],
           providerOptions: isReasoningModel
             ? {
                 anthropic: {
@@ -139,21 +141,23 @@ export async function POST(request: Request) {
                 },
               }
             : undefined,
-          tools: {
-            getWeather,
-            createDocument: createDocument({
-              userId: publicUserId,
-              dataStream,
-            }),
-            updateDocument: updateDocument({
-              userId: publicUserId,
-              dataStream,
-            }),
-            requestSuggestions: requestSuggestions({
-              userId: publicUserId,
-              dataStream,
-            }),
-          },
+          tools: artifactsEnabled
+            ? {
+                getWeather,
+                createDocument: createDocument({
+                  userId: publicUserId,
+                  dataStream,
+                }),
+                updateDocument: updateDocument({
+                  userId: publicUserId,
+                  dataStream,
+                }),
+                requestSuggestions: requestSuggestions({
+                  userId: publicUserId,
+                  dataStream,
+                }),
+              }
+            : {},
           experimental_telemetry: {
             isEnabled: isProductionEnvironment,
             functionId: "stream-text",

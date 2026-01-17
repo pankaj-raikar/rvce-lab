@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Chat } from "@/components/chat";
 import { DataStreamHandler } from "@/components/data-stream-handler";
 import { DEFAULT_CHAT_MODEL } from "@/lib/ai/models";
+import { isArtifactsEnabled } from "@/lib/constants";
 import { getChatById, getMessagesByChatId } from "@/lib/db/queries";
 import { convertToUIMessages } from "@/lib/utils";
 
@@ -44,7 +45,7 @@ async function ChatPage({ params }: { params: Promise<{ id: string }> }) {
           initialVisibilityType={chat.visibility}
           isReadonly={false}
         />
-        <DataStreamHandler />
+        {isArtifactsEnabled && <DataStreamHandler />}
       </>
     );
   }
@@ -59,7 +60,7 @@ async function ChatPage({ params }: { params: Promise<{ id: string }> }) {
         initialVisibilityType={chat.visibility}
         isReadonly={false}
       />
-      <DataStreamHandler />
+      {isArtifactsEnabled && <DataStreamHandler />}
     </>
   );
 }
