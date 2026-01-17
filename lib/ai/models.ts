@@ -9,7 +9,6 @@ export type ChatModel = {
 };
 
 export const chatModels: ChatModel[] = [
-  
   // Google
   {
     id: "provider-5/gemini-2.5-flash-lite",
@@ -23,7 +22,7 @@ export const chatModels: ChatModel[] = [
     provider: "google",
     description: "Best balance of speed, intelligence, and cost",
   },
-  
+
   {
     id: "provider-5/gemini-2.5-flash-thinking",
     name: "Gemini 2.5 Flash Thinking",
