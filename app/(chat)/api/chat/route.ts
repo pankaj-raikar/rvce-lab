@@ -9,8 +9,6 @@ import {
 } from "ai";
 import { after } from "next/server";
 import { createResumableStreamContext } from "resumable-stream";
-import { auth, type UserType } from "@/app/(auth)/auth";
-import { entitlementsByUserType } from "@/lib/ai/entitlements";
 import { type RequestHints, systemPrompt } from "@/lib/ai/prompts";
 import { getLanguageModel } from "@/lib/ai/providers";
 import { createDocument } from "@/lib/ai/tools/create-document";
@@ -22,8 +20,8 @@ import {
   createStreamId,
   deleteChatById,
   getChatById,
-  getMessageCountByUserId,
   getMessagesByChatId,
+  getPublicUserId,
   saveChat,
   saveMessages,
   updateChatTitleById,
@@ -62,22 +60,7 @@ export async function POST(request: Request) {
     const { id, message, messages, selectedChatModel, selectedVisibilityType } =
       requestBody;
 
-    const session = await auth();
-
-    if (!session?.user) {
-      return new ChatSDKError("unauthorized:chat").toResponse();
-    }
-
-    const userType: UserType = session.user.type;
-
-    const messageCount = await getMessageCountByUserId({
-      id: session.user.id,
-      differenceInHours: 24,
-    });
-
-    if (messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
-      return new ChatSDKError("rate_limit:chat").toResponse();
-    }
+    const publicUserId = await getPublicUserId();
 
     const isToolApprovalFlow = Boolean(messages);
 
@@ -86,16 +69,13 @@ export async function POST(request: Request) {
     let titlePromise: Promise<string> | null = null;
 
     if (chat) {
-      if (chat.userId !== session.user.id) {
-        return new ChatSDKError("forbidden:chat").toResponse();
-      }
       if (!isToolApprovalFlow) {
         messagesFromDb = await getMessagesByChatId({ id });
       }
     } else if (message?.role === "user") {
       await saveChat({
         id,
-        userId: session.user.id,
+        userId: publicUserId,
         title: "New chat",
         visibility: selectedVisibilityType,
       });
@@ -161,9 +141,18 @@ export async function POST(request: Request) {
             : undefined,
           tools: {
             getWeather,
-            createDocument: createDocument({ session, dataStream }),
-            updateDocument: updateDocument({ session, dataStream }),
-            requestSuggestions: requestSuggestions({ session, dataStream }),
+            createDocument: createDocument({
+              userId: publicUserId,
+              dataStream,
+            }),
+            updateDocument: updateDocument({
+              userId: publicUserId,
+              dataStream,
+            }),
+            requestSuggestions: requestSuggestions({
+              userId: publicUserId,
+              dataStream,
+            }),
           },
           experimental_telemetry: {
             isEnabled: isProductionEnvironment,
@@ -268,18 +257,6 @@ export async function DELETE(request: Request) {
 
   if (!id) {
     return new ChatSDKError("bad_request:api").toResponse();
-  }
-
-  const session = await auth();
-
-  if (!session?.user) {
-    return new ChatSDKError("unauthorized:chat").toResponse();
-  }
-
-  const chat = await getChatById({ id });
-
-  if (chat?.userId !== session.user.id) {
-    return new ChatSDKError("forbidden:chat").toResponse();
   }
 
   const deletedChat = await deleteChatById({ id });
