@@ -79,6 +79,34 @@ export async function createGuestUser() {
   }
 }
 
+const PUBLIC_USER_EMAIL = "public@local";
+
+export async function getPublicUserId() {
+  try {
+    const [existingUser] = await db
+      .select({ id: user.id })
+      .from(user)
+      .where(eq(user.email, PUBLIC_USER_EMAIL))
+      .limit(1);
+
+    if (existingUser) {
+      return existingUser.id;
+    }
+
+    const [createdUser] = await db
+      .insert(user)
+      .values({ email: PUBLIC_USER_EMAIL, password: null })
+      .returning({ id: user.id });
+
+    return createdUser.id;
+  } catch (_error) {
+    throw new ChatSDKError(
+      "bad_request:database",
+      "Failed to get or create public user"
+    );
+  }
+}
+
 export async function saveChat({
   id,
   userId,
@@ -150,6 +178,98 @@ export async function deleteAllChatsByUserId({ userId }: { userId: string }) {
       "bad_request:database",
       "Failed to delete all chats by user id"
     );
+  }
+}
+
+export async function deleteAllChats() {
+  try {
+    const allChats = await db.select({ id: chat.id }).from(chat);
+
+    if (allChats.length === 0) {
+      return { deletedCount: 0 };
+    }
+
+    const chatIds = allChats.map((c) => c.id);
+
+    await db.delete(vote).where(inArray(vote.chatId, chatIds));
+    await db.delete(message).where(inArray(message.chatId, chatIds));
+    await db.delete(stream).where(inArray(stream.chatId, chatIds));
+
+    const deletedChats = await db.delete(chat).returning();
+
+    return { deletedCount: deletedChats.length };
+  } catch (_error) {
+    throw new ChatSDKError(
+      "bad_request:database",
+      "Failed to delete all chats"
+    );
+  }
+}
+
+export async function getChats({
+  limit,
+  startingAfter,
+  endingBefore,
+}: {
+  limit: number;
+  startingAfter: string | null;
+  endingBefore: string | null;
+}) {
+  try {
+    const extendedLimit = limit + 1;
+
+    const query = (whereCondition?: SQL<any>) =>
+      db
+        .select()
+        .from(chat)
+        .where(whereCondition)
+        .orderBy(desc(chat.createdAt))
+        .limit(extendedLimit);
+
+    let filteredChats: Chat[] = [];
+
+    if (startingAfter) {
+      const [selectedChat] = await db
+        .select()
+        .from(chat)
+        .where(eq(chat.id, startingAfter))
+        .limit(1);
+
+      if (!selectedChat) {
+        throw new ChatSDKError(
+          "not_found:database",
+          `Chat with id ${startingAfter} not found`
+        );
+      }
+
+      filteredChats = await query(gt(chat.createdAt, selectedChat.createdAt));
+    } else if (endingBefore) {
+      const [selectedChat] = await db
+        .select()
+        .from(chat)
+        .where(eq(chat.id, endingBefore))
+        .limit(1);
+
+      if (!selectedChat) {
+        throw new ChatSDKError(
+          "not_found:database",
+          `Chat with id ${endingBefore} not found`
+        );
+      }
+
+      filteredChats = await query(lt(chat.createdAt, selectedChat.createdAt));
+    } else {
+      filteredChats = await query();
+    }
+
+    const hasMore = filteredChats.length > limit;
+
+    return {
+      chats: hasMore ? filteredChats.slice(0, limit) : filteredChats,
+      hasMore,
+    };
+  } catch (_error) {
+    throw new ChatSDKError("bad_request:database", "Failed to get chats");
   }
 }
 

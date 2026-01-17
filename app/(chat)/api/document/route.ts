@@ -1,8 +1,8 @@
-import { auth } from "@/app/(auth)/auth";
 import type { ArtifactKind } from "@/components/artifact";
 import {
   deleteDocumentsByIdAfterTimestamp,
   getDocumentsById,
+  getPublicUserId,
   saveDocument,
 } from "@/lib/db/queries";
 import { ChatSDKError } from "@/lib/errors";
@@ -18,22 +18,12 @@ export async function GET(request: Request) {
     ).toResponse();
   }
 
-  const session = await auth();
-
-  if (!session?.user) {
-    return new ChatSDKError("unauthorized:document").toResponse();
-  }
-
   const documents = await getDocumentsById({ id });
 
   const [document] = documents;
 
   if (!document) {
     return new ChatSDKError("not_found:document").toResponse();
-  }
-
-  if (document.userId !== session.user.id) {
-    return new ChatSDKError("forbidden:document").toResponse();
   }
 
   return Response.json(documents, { status: 200 });
@@ -50,12 +40,6 @@ export async function POST(request: Request) {
     ).toResponse();
   }
 
-  const session = await auth();
-
-  if (!session?.user) {
-    return new ChatSDKError("not_found:document").toResponse();
-  }
-
   const {
     content,
     title,
@@ -63,22 +47,14 @@ export async function POST(request: Request) {
   }: { content: string; title: string; kind: ArtifactKind } =
     await request.json();
 
-  const documents = await getDocumentsById({ id });
-
-  if (documents.length > 0) {
-    const [doc] = documents;
-
-    if (doc.userId !== session.user.id) {
-      return new ChatSDKError("forbidden:document").toResponse();
-    }
-  }
+  const publicUserId = await getPublicUserId();
 
   const document = await saveDocument({
     id,
     content,
     title,
     kind,
-    userId: session.user.id,
+    userId: publicUserId,
   });
 
   return Response.json(document, { status: 200 });
@@ -101,20 +77,6 @@ export async function DELETE(request: Request) {
       "bad_request:api",
       "Parameter timestamp is required."
     ).toResponse();
-  }
-
-  const session = await auth();
-
-  if (!session?.user) {
-    return new ChatSDKError("unauthorized:document").toResponse();
-  }
-
-  const documents = await getDocumentsById({ id });
-
-  const [document] = documents;
-
-  if (document.userId !== session.user.id) {
-    return new ChatSDKError("forbidden:document").toResponse();
   }
 
   const documentsDeleted = await deleteDocumentsByIdAfterTimestamp({
