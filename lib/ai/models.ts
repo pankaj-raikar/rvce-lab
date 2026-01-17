@@ -1,5 +1,5 @@
 // Curated list of top models from Vercel AI Gateway
-export const DEFAULT_CHAT_MODEL = "provider-5/gemini-2.5-pro";
+export const DEFAULT_CHAT_MODEL = "provider-5/gemini-2.5-flash-lite";
 
 export type ChatModel = {
   id: string;
@@ -9,18 +9,13 @@ export type ChatModel = {
 };
 
 export const chatModels: ChatModel[] = [
+  
   // Google
   {
-    id: "provider-5/gemini-2.5-pro",
-    name: "Gemini 2.5 Pro",
+    id: "provider-5/gemini-2.5-flash-lite",
+    name: "Gemini 2.5 Flash Lite",
     provider: "google",
-    description: "Most capable Google models",
-  },
-  {
-    id: "provider-5/gemini-2.5-flash-thinking",
-    name: "Gemini 2.5 Flash Thinking",
-    provider: "google",
-    description: "Enhanced reasoning capabilities",
+    description: "Ultra fast and affordable",
   },
   {
     id: "provider-5/gemini-2.5-flash",
@@ -28,12 +23,14 @@ export const chatModels: ChatModel[] = [
     provider: "google",
     description: "Best balance of speed, intelligence, and cost",
   },
+  
   {
-    id: "provider-5/gemini-2.5-flash-lite",
-    name: "Gemini 2.5 Flash Lite",
+    id: "provider-5/gemini-2.5-flash-thinking",
+    name: "Gemini 2.5 Flash Thinking",
     provider: "google",
-    description: "Ultra fast and affordable",
+    description: "Enhanced reasoning capabilities",
   },
+
   // OpenAI
   {
     id: "provider-3/gpt-5.1",
