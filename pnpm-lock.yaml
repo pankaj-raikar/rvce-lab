@@ -86,6 +86,12 @@ importers:
       '@radix-ui/react-visually-hidden':
         specifier: ^1.1.0
         version: 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/filemanager-data-provider':
+        specifier: ^2.4.0
+        version: 2.4.0
+      '@svar-ui/react-filemanager':
+        specifier: ^2.4.1
+        version: 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
       '@vercel/analytics':
         specifier: ^1.3.1
         version: 1.5.0(next@16.0.10(@opentelemetry/api@1.9.0)(@playwright/test@1.51.0)(react-dom@19.0.1(react@19.0.1))(react@19.0.1))(react@19.0.1)
@@ -2206,6 +2212,117 @@ packages:
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
+
+  '@svar-ui/comments-locales@2.4.0':
+    resolution: {integrity: sha512-StcviQBWrfs4iulgNAb7rjycBe6fsv2/UvmeZpHNHSvSGCMF+q5Cx0FczwgCXd+dVQI6QPhfOPunmu64hzgIWg==}
+
+  '@svar-ui/core-locales@2.4.0':
+    resolution: {integrity: sha512-FXB4MtqbZw4TNdPfELsMum6y5Tgu0PRA7a6upJjLWDYJjlcYEcyT49iJONb30gPIL7HgJkUylJnz6iNuNA3Icw==}
+
+  '@svar-ui/editor-locales@2.4.0':
+    resolution: {integrity: sha512-ngo2vdAxdpYeEhCfIJstyKP6mY7uE3hDI7xpzkN8d92DJcrdgCquYTAkI7UV94FGlfGMfGM2DFnXYSuQwLYB9w==}
+
+  '@svar-ui/filemanager-data-provider@2.4.0':
+    resolution: {integrity: sha512-p6Bnd7JTwBivq8rx/VrHx3lSZFSAIjOP0YCJe/BvWAuWzIQA3fJWjfykr/hyP3/4RFV9YU8iFptk11H8hjFgDw==}
+
+  '@svar-ui/filemanager-locales@2.4.0':
+    resolution: {integrity: sha512-mzVl2v18TLjALCtjHzTMQX1VyUDLClNzQMCTBTsVZaZ4ooVRKSsGkNcSCqpYn4gEWPvPYO/LrzdZqgzUBRY7Yg==}
+
+  '@svar-ui/filemanager-store@2.4.0':
+    resolution: {integrity: sha512-nMr/lO8rjb2etl1nm87wFALDwd70IiwGemNowIE5E6+StlUTfjKgoXfXb5HbQzYvCGstt35MO69wtZcs71NIwg==}
+
+  '@svar-ui/filter-locales@2.4.0':
+    resolution: {integrity: sha512-POV7u7xM9O84i5HnWKQ9LfWyfvmVgFOl0wDO+Ix6MfugPkj14pX6FLvuooyXwfUNMV6G6hS7AuKlNR5SlW94ZA==}
+
+  '@svar-ui/filter-store@2.4.0':
+    resolution: {integrity: sha512-xEnVZXuDFxduHfqq+r1YjditolB1FpHHFGK87WOjTrtIPmiiKCQF2vt5LKJuswUQPbG3kMW93EAvZWZVCnKeKA==}
+
+  '@svar-ui/grid-data-provider@2.4.0':
+    resolution: {integrity: sha512-Rm0Zbwj3/ZZLTdpmJXX/lGKafL2sqZuikOh/8KXNty7RXjx6WqryjaAkX6t0cl8lnhPjV/awC4R4+uYRW4UbEQ==}
+
+  '@svar-ui/grid-locales@2.4.0':
+    resolution: {integrity: sha512-UnhsQYzDAplMES08QXupa7/1BdBXyCujnTuQaIKZcDf/PGRiSFo3I3iNCk6UdJ5Tnj4si9CqB8/wcIp2YyAHSg==}
+
+  '@svar-ui/grid-store@2.4.0':
+    resolution: {integrity: sha512-GJyVC+5G+aA8EfcoKMwrHVP2/OK7bUUbp9ofyZTGUAyuXO9tkxRnfquvk+nTA1ybOfbFCY8rSsJTEHYcgXQCTw==}
+
+  '@svar-ui/lib-data-provider@1.7.1':
+    resolution: {integrity: sha512-5Bi9ywngcMTKpGtan0s7q8ivd84Bp0ZnRP+5bLZg6oiRB7YMyN5D5X+apc3CWDAnG4zZn3en4YwS2qc/aHIIuQ==}
+
+  '@svar-ui/lib-dom@0.11.1':
+    resolution: {integrity: sha512-4wgerhDVttvrQ9t6OjHur34Of+VVr2VygA16HHGcWHytgdnOuGgfZb5PeBEhCJw/pO3RKfJvBHbaMIzL4IR//g==}
+
+  '@svar-ui/lib-react@1.2.2':
+    resolution: {integrity: sha512-bB+Vou2NM0JhMuFW03MsjjoV5Y3xcFfuuK48+7uzUC9Ui1oSWpCK+txOZ+dnUFJISSVjSsXuF34AzMw/2CA63w==}
+
+  '@svar-ui/lib-state@1.9.6':
+    resolution: {integrity: sha512-twoHa8wZvzdxtES68s6Wnp4Xi1WivScNaFFK6sJ6WDgqVYOzJw0ZhVVrdwHQgieLITTKl/DYh/U3nuqtMetKYw==}
+
+  '@svar-ui/react-comments@2.4.1':
+    resolution: {integrity: sha512-zliH0x74guyS3dk/e+wh00t3tFBTaL+j9wMw34PDqkKBiBAOKRUuNhTT7nNRYSnqb1xr7RnHtqMdYhTYelueAg==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-core@2.4.1':
+    resolution: {integrity: sha512-lEB12BuBt3xq+68vWPM4K3CUFaDbvy5ZCyIIRXLBxmeeu8IIlVkSrDvPFQ0fUn05+mB3JzXxQx1SjKd2Ic90Tg==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-editor@2.4.1':
+    resolution: {integrity: sha512-kcxywPxQ821z/8mmAuIJmd1M6mQr/iRdzDD5qEbBqBL1KEASC5a2KCOTfuiKdykYJVgVfqCcQDCd/TyO5NzkYQ==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-filemanager@2.4.1':
+    resolution: {integrity: sha512-WxdC7js395hKCLYtbfV1qHjufVUgqEhmF2n0romoYeXzBvlnzdlgNG5gwFRxnMHLmcHj+1/mOBQOKDFjCp6Fwg==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-filter@2.4.1':
+    resolution: {integrity: sha512-FEoGwofzkMpQtWVXArmP9DL/s9mLsRLedLVea9BQQ7yjND2fnlLKo9c8wMvlQJ2e7reZ8QQbWskh11v0dx9vtQ==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-grid@2.4.1':
+    resolution: {integrity: sha512-Er89V+wxdaXQryUAYi4lvxY66j84/m1mx5JO5Ui3iXAKaKbsSNY9dHArU4vaXphFKeA017u95M52hUJNmG6URQ==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-menu@2.4.1':
+    resolution: {integrity: sha512-psW3v0VwoKHVTTkZ5kI+R7WocymCA9C96igr/bX6dWpg/pUVO6/8xQMn0p8vuYxPq02nGYncbmDTIzAOT5SPLA==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-tasklist@2.4.1':
+    resolution: {integrity: sha512-tyg5Fh18PEH5UTpRDb99BuYpK6A1q1dqQ1yN4uYC4c7tufvE/WqJWqsvVy2rcmAl6y0Xmzd01NPu+/TunFGWKw==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-toolbar@2.4.1':
+    resolution: {integrity: sha512-cKFMkmLQ0X8xToG0omni2/y850oL5cxU/6RtPOUv4uC9FFrgrbwJKiuummSxST6nVCrLBfZ+JlKazZH1Ez3Rew==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/react-uploader@2.4.1':
+    resolution: {integrity: sha512-FEG7wPZGBpcnu7HR8VlQFoYV7DneKPgRUd+DISjHmFmYPtDSTXlWfljvQ119RWeGbtrU+yTMACgZEI8renpCfQ==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+
+  '@svar-ui/tasklist-locales@2.4.0':
+    resolution: {integrity: sha512-gcclKwfShkTiZaYCl9blfOiUqVwcEv8qtyNoKfEhli4FWjjG4sysue27CvHD2qFZAjoRYQi2hoQ4odLM1AO7tQ==}
+
+  '@svar-ui/uploader-locales@2.4.0':
+    resolution: {integrity: sha512-rOE80Tlbn+aMUi8rr3JKZ1mlYeWXofcjSUu9qbVyrjBwA9xXZ/leIn95zci2DALLEC0R7txTxkF6R+ULfnvzlQ==}
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -5671,6 +5788,165 @@ snapshots:
   '@shikijs/vscode-textmate@10.0.2': {}
 
   '@standard-schema/spec@1.1.0': {}
+
+  '@svar-ui/comments-locales@2.4.0': {}
+
+  '@svar-ui/core-locales@2.4.0': {}
+
+  '@svar-ui/editor-locales@2.4.0': {}
+
+  '@svar-ui/filemanager-data-provider@2.4.0':
+    dependencies:
+      '@svar-ui/lib-data-provider': 1.7.1
+
+  '@svar-ui/filemanager-locales@2.4.0': {}
+
+  '@svar-ui/filemanager-store@2.4.0':
+    dependencies:
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/filter-locales@2.4.0': {}
+
+  '@svar-ui/filter-store@2.4.0':
+    dependencies:
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/grid-data-provider@2.4.0':
+    dependencies:
+      '@svar-ui/lib-data-provider': 1.7.1
+
+  '@svar-ui/grid-locales@2.4.0': {}
+
+  '@svar-ui/grid-store@2.4.0':
+    dependencies:
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/lib-data-provider@1.7.1':
+    dependencies:
+      '@svar-ui/lib-state': 1.9.6
+
+  '@svar-ui/lib-dom@0.11.1': {}
+
+  '@svar-ui/lib-react@1.2.2':
+    dependencies:
+      '@svar-ui/lib-dom': 0.11.1
+
+  '@svar-ui/lib-state@1.9.6': {}
+
+  '@svar-ui/react-comments@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/comments-locales': 2.4.0
+      '@svar-ui/core-locales': 2.4.0
+      '@svar-ui/lib-data-provider': 1.7.1
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-menu': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-core@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/core-locales': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-react': 1.2.2
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-editor@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/editor-locales': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/react-comments': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-tasklist': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-toolbar': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-filemanager@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/filemanager-data-provider': 2.4.0
+      '@svar-ui/filemanager-locales': 2.4.0
+      '@svar-ui/filemanager-store': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-react': 1.2.2
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-grid': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-menu': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-uploader': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-filter@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/filter-locales': 2.4.0
+      '@svar-ui/filter-store': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-react': 1.2.2
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-grid': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-menu': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-grid@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/grid-data-provider': 2.4.0
+      '@svar-ui/grid-locales': 2.4.0
+      '@svar-ui/grid-store': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-react': 1.2.2
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-editor': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-filter': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/react-menu': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-menu@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/core-locales': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-tasklist@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/lib-data-provider': 1.7.1
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/lib-state': 1.9.6
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/tasklist-locales': 2.4.0
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-toolbar@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/core-locales': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/react-uploader@2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)':
+    dependencies:
+      '@svar-ui/core-locales': 2.4.0
+      '@svar-ui/lib-dom': 0.11.1
+      '@svar-ui/react-core': 2.4.1(react-dom@19.0.1(react@19.0.1))(react@19.0.1)
+      '@svar-ui/uploader-locales': 2.4.0
+      react: 19.0.1
+      react-dom: 19.0.1(react@19.0.1)
+
+  '@svar-ui/tasklist-locales@2.4.0': {}
+
+  '@svar-ui/uploader-locales@2.4.0': {}
 
   '@swc/helpers@0.5.15':
     dependencies:
