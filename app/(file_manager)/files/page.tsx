@@ -17,13 +17,6 @@ export default function App() {
     api.setNext(restProvider);
 
     api.on("download-file", (ev: any) => {
-      // ev is the file object or contains it?
-      // SVAR docs say ev is the file object or contains id.
-      // Usually ev.file or we get file by id.
-      // Let's check docs again or assume we need to fetch info?
-      // Actually RestDataProvider loadFiles returns objects with `url` I added.
-      // But the event usually has { id, ... }
-      
       const file = api.getFile(ev.id);
       if (file && file.url) {
           window.open(file.url, "_blank");

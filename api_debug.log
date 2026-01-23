@@ -1,0 +1,2 @@
+[2026-01-22T15:04:14.737Z] [GET] GET http://localhost:3000/api/fs/files/%2F Body: "N/A"
+[2026-01-22T15:04:15.781Z] [GET] GET http://localhost:3000/api/fs/files/%2F Body: "N/A"

@@ -99,8 +99,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
           console.error("GET Error:", error);
           return NextResponse.json({ 
               error: "Failed to list files", 
-              details: error.message,
-              stack: error.stack 
+              details: error.message
           }, { status: 500 });
       }
   }
@@ -114,46 +113,85 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
 
   // UPLOAD
   if (command === "upload") {
-      const formData = await request.formData();
-      const file = formData.get("file") as File;
-      const parentId = request.nextUrl.searchParams.get("id") || "/";
-      
-      if (file) {
-        let prefix = getPrefix(parentId);
-        const pathname = prefix + file.name;
-        
-        await put(pathname, file, { access: 'public' });
-        return NextResponse.json({ status: "success" });
+      try {
+          const formData = await request.formData();
+          const file = formData.get("file") as File;
+          const parentId = request.nextUrl.searchParams.get("id") || "/";
+          
+          if (file) {
+            let prefix = getPrefix(parentId);
+            const pathname = prefix + file.name;
+            
+            await put(pathname, file, { access: 'public' });
+            return NextResponse.json({ status: "success" });
+          }
+          return NextResponse.json({ error: "No file provided" }, { status: 400 });
+      } catch (error: any) {
+          console.error("Upload Error:", error);
+          return NextResponse.json({ 
+              error: "Failed to upload file", 
+              details: error.message 
+          }, { status: 500 });
       }
-      return NextResponse.json({ error: "No file provided" }, { status: 400 });
   }
 
   // CREATE FOLDER
   if (command === "files") {
-      const body = await request.json();
-      const idParts = route.slice(1);
-      const parentId = "/" + idParts.join("/");
-      
-      const { name, type } = body;
-      if (type === "folder") {
-          let prefix = getPrefix(parentId);
-          const folderPath = prefix + name + "/.keep"; // Create a keep file to reserve folder
-          await put(folderPath, "folder", { access: 'public' });
+      try {
+          const body = await request.json();
+          const idParts = route.slice(1);
+          const parentId = "/" + idParts.join("/");
           
-          const newId = (parentId === "/" ? "" : parentId) + "/" + name;
-          return NextResponse.json({ status: "success", id: newId });
-      } else {
-          // Create empty file
-          let prefix = getPrefix(parentId);
-          const filePath = prefix + name;
-          await put(filePath, "", { access: 'public' });
-          
-          const newId = (parentId === "/" ? "" : parentId) + "/" + name;
-          return NextResponse.json({ status: "success", id: newId }); 
+          const { name: rawName, type } = body;
+
+          // Validate and sanitize name
+          if (!rawName || typeof rawName !== "string") {
+              return NextResponse.json({ error: "Invalid name" }, { status: 400 });
+          }
+
+          // Check for path traversal, separators, and null bytes
+          if (
+              rawName.includes("/") || 
+              rawName.includes("\\") || 
+              rawName.indexOf("\0") !== -1 || 
+              rawName === ".." || 
+              rawName === "."
+          ) {
+              return NextResponse.json({ error: "Invalid name: contains restricted characters" }, { status: 400 });
+          }
+
+          const name = rawName.trim();
+          if (!name) {
+              return NextResponse.json({ error: "Name cannot be empty" }, { status: 400 });
+          }
+
+          if (type === "folder") {
+              let prefix = getPrefix(parentId);
+              const folderPath = prefix + name + "/.keep"; // Create a keep file to reserve folder
+              await put(folderPath, "folder", { access: 'public' });
+              
+              const newId = (parentId === "/" ? "" : parentId) + "/" + name;
+              return NextResponse.json({ status: "success", id: newId });
+          } else {
+              // Create empty file
+              let prefix = getPrefix(parentId);
+              const filePath = prefix + name;
+              await put(filePath, "", { access: 'public' });
+              
+              const newId = (parentId === "/" ? "" : parentId) + "/" + name;
+              return NextResponse.json({ status: "success", id: newId }); 
+          }
+      } catch (error: any) {
+          console.error("Create Error:", error);
+          return NextResponse.json({ 
+              error: "Failed to create item", 
+              details: error.message 
+          }, { status: 500 });
       }
   }
 
-  return NextResponse.json({ status: "error" });
+return NextResponse.json({ error: "Unknown command" }, { status: 400 });
+
 }
 
 
@@ -169,7 +207,28 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         if (operation === "rename") {
              const idParts = route.slice(1);
              const id = "/" + idParts.join("/"); // Old ID
-             const { name } = body;
+             const { name: rawName } = body;
+
+             // Validate and sanitize name
+             if (!rawName || typeof rawName !== "string") {
+                 return NextResponse.json({ error: "Invalid name" }, { status: 400 });
+             }
+
+             // Check for path traversal, separators, and null bytes
+             if (
+                 rawName.includes("/") || 
+                 rawName.includes("\\") || 
+                 rawName.indexOf("\0") !== -1 || 
+                 rawName === ".." || 
+                 rawName === "."
+             ) {
+                 return NextResponse.json({ error: "Invalid name: contains restricted characters" }, { status: 400 });
+             }
+
+             const name = rawName.trim();
+             if (!name) {
+                 return NextResponse.json({ error: "Name cannot be empty" }, { status: 400 });
+             }
              
              // Check if it is a folder or file? 
              // We can invoke `head` to check meta, or just assume from ID?
